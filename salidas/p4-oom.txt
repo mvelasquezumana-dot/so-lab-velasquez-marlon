@@ -1,0 +1,14 @@
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O   PIDS
+c7d158e60e18   labso-order-api-1   0.02%     23.88MiB / 76MiB    31.41%    9.14kB / 8.39kB   0B / 0B     1
+retenido=15 MiB rss=47592 kB
+retenido=30 MiB rss=62956 kB
+retenido=45 MiB rss=78320 kB
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.30.8</center>
+</body>
+</html>
+OOMKilled=true ExitCode=137
+[mar nov 24 04:34:21 2026] Memory cgroup out of memory: Killed process 2857 (python) total-vm:101236kB, anon-rss:76804kB, file-rss:8640kB, shmem-rss:0kB, UID:0 pgtables:232kB oom_score_adj:0
