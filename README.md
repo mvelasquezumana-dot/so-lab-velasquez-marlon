@@ -60,7 +60,8 @@ Universidad Tecnológica de Pereira · Tecnología en Desarrollo de Software
 
 ### Práctica 6 — Señales: apagado amable vs. forzado
 ![captura](evidencias/p6/p6-01-sigterm.png)
-![captura](evidencias/p6/p6-02-strace-sigterm.png)
+![captura](evidencias/p6/p6-02-strace-sigterm-1.png)
+![captura](evidencias/p6/p6-02-strace-sigterm-2.png)
 ![captura](evidencias/p6/p6-03-sigkill.png)
 ![captura](evidencias/p6/p6-04-strace-sigkill.png)
 
