@@ -1,0 +1,21 @@
+=== PARTE A: SIGTERM ===
+ Container labso-order-api-1 Stopping 
+ Container labso-order-api-1 Stopped 
+
+real	0m3,977s
+user	0m0,116s
+sys	0m0,044s
+ExitCode=0
+order-api-1  | [KERNEL] accept() falló: [Errno 24] No file descriptors available
+order-api-1  | [SO-SIGNAL] Señal 15 (SIGTERM) recibida. Cerrando conexiones...
+order-api-1  | [SO-SIGNAL] Conexión a Redis cerrada. Saliendo limpiamente (exit 0).
+=== PARTE B: SIGKILL ===
+ Container labso-order-api-1 Stopping 
+ Container labso-order-api-1 Stopped 
+
+real	0m10,354s
+user	0m0,133s
+sys	0m0,042s
+ExitCode=137
+order-api-1  | [INICIO] Escuchando en :8080 | PID en el namespace: 1 | LEAK_MB=15 CPU_ITER=10000000
+order-api-1  | [SO-SIGNAL] Señal 15 (SIGTERM) recibida. Cerrando conexiones...
