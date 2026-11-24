@@ -28,7 +28,7 @@ CPUS = {                     # valor "cpus:" de cada servicio en docker-compose.
 }
 LIMITE_MEMORIA_MIB = {       # valor "mem_limit:" de cada servicio (en MiB)
     "gateway": 64,
-    "order-api": 72,
+    "order-api": 76,
     "redis": 128,
 }
 NOFILE_API = 256             # "ulimits: nofile:" de order-api
@@ -82,7 +82,7 @@ def linea(texto=""):
 
 def tabla_2_cpu():
     linea("TABLA 2 - CPU (archivo cpu.max del cgroup)")
-    linea("-" * 72)
+    linea("-" * 76)
     total = 0
     for servicio, cpus in CPUS.items():
         cuota = int(cpus * PERIODO_US)
@@ -104,7 +104,7 @@ def tabla_2_cpu():
 def tabla_3_memoria(base):
     limite = LIMITE_MEMORIA_MIB["order-api"]
     linea("TABLA 3 - MEMORIA Y OOM KILLER (order-api)")
-    linea("-" * 72)
+    linea("-" * 76)
     linea(f"Memoria base: {base:.1f} MiB | límite (mem_limit = memswap_limit): {limite} MiB"
           f" | fuga por llamada: {FUGA_POR_LLAMADA_MIB} MiB")
     llamada, consumo = 0, base
@@ -133,7 +133,7 @@ def tabla_3_memoria(base):
 
 def tabla_4_descriptores(fds_base):
     linea("TABLA 4 - DESCRIPTORES DE ARCHIVO (order-api, prueba /slow)")
-    linea("-" * 72)
+    linea("-" * 76)
     linea(f"FDs base: {fds_base} | límite nofile: {NOFILE_API} | cada petición /slow abre 2"
           " (1 socket desde nginx + 1 socket a Redis)")
     n_max = (NOFILE_API - fds_base) // 2

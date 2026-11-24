@@ -25,8 +25,8 @@ services:
       SHUTDOWN_DELAY: ${SHUTDOWN_DELAY:-3}
     depends_on: [redis]
     cpus: 0.25                 # cpu.max = "25000 100000"
-    mem_limit: 72m             # valor sugerido por: python3 calculos.py --medir
-    memswap_limit: 72m         # imprescindible: sin esto Docker permite swap = mem_limit (total 2x)
+    mem_limit: 76m             # valor sugerido por: python3 calculos.py --medir
+    memswap_limit: 76m         # imprescindible: sin esto Docker permite swap = mem_limit (total 2x)
     pids_limit: 300            # hilos de ThreadingHTTPServer cuentan como tareas en pids.max
     ulimits:
       nofile: { soft: 256, hard: 256 }   # RLIMIT_NOFILE por proceso (ver Tabla 4)
