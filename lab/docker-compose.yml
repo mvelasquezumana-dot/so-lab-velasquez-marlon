@@ -1,0 +1,49 @@
+# Laboratorio SO: límites del kernel (cgroups v2, rlimits, señales) declarados por servicio.
+# Valores de ejemplo: cada estudiante los ajusta con python3 calculos.py --medir.
+name: labso
+
+services:
+  gateway:
+    image: nginx:stable-alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on: [order-api]
+    cpus: 0.50                 # cpu.max = "50000 100000"
+    mem_limit: 64m             # memory.max
+    memswap_limit: 64m         # = mem_limit  ->  memory.swap.max = 0 (sin swap)
+    pids_limit: 64             # pids.max
+
+  order-api:
+    build: .
+    environment:
+      REDIS_HOST: redis
+      LEAK_MB: ${LEAK_MB:-15}
+      CPU_ITER: ${CPU_ITER:-10000000}
+      HOLD_S: ${HOLD_S:-15}
+      SHUTDOWN_DELAY: ${SHUTDOWN_DELAY:-3}
+    depends_on: [redis]
+    cpus: 0.25                 # cpu.max = "25000 100000"
+    mem_limit: 72m             # valor sugerido por: python3 calculos.py --medir
+    memswap_limit: 72m         # imprescindible: sin esto Docker permite swap = mem_limit (total 2x)
+    pids_limit: 300            # hilos de ThreadingHTTPServer cuentan como tareas en pids.max
+    ulimits:
+      nofile: { soft: 256, hard: 256 }   # RLIMIT_NOFILE por proceso (ver Tabla 4)
+    stop_grace_period: 10s     # tras este plazo Docker envía SIGKILL (exit 137)
+    restart: "no"              # durante las pruebas: conserva la evidencia del exit 137
+
+  redis:
+    image: redis:7-alpine
+    command: >
+      redis-server --appendonly yes --appendfsync everysec
+                   --maxmemory 96mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    cpus: 0.50
+    mem_limit: 128m
+    memswap_limit: 128m
+    pids_limit: 64
+
+volumes:
+  redis_data:

@@ -1,0 +1,33 @@
+[medido] memoria base = 36.5 MiB, FDs base = 5
+
+TABLA 2 - CPU (archivo cpu.max del cgroup)
+------------------------------------------------------------------------
+gateway    cpus=0.5   cpu.max esperado: "50000 100000"  -> puede usar 50 ms de cada 100 ms
+order-api  cpus=0.25  cpu.max esperado: "25000 100000"  -> puede usar 25 ms de cada 100 ms
+redis      cpus=0.5   cpu.max esperado: "50000 100000"  -> puede usar 50 ms de cada 100 ms
+
+Prueba /cpu en order-api (cuánto más tarda por estar limitada):
+  1 petición(es) simultánea(s) -> ratio_wall/cpu esperado ≈ 4
+  2 petición(es) simultánea(s) -> ratio_wall/cpu esperado ≈ 8
+
+Total reservado: 1.25 núcleos de 4 disponibles -> OK
+
+TABLA 3 - MEMORIA Y OOM KILLER (order-api)
+------------------------------------------------------------------------
+Memoria base: 36.5 MiB | límite (mem_limit = memswap_limit): 72 MiB | fuga por llamada: 15 MiB
+  curl /ram #1: 51.5 MiB <= 72 -> sobrevive
+  curl /ram #2: 66.5 MiB <= 72 -> sobrevive
+  curl /ram #3: 81.5 MiB > 72 -> OOM Killer, exit 137
+Predicción: el proceso muere en la llamada 3.
+Para que sobreviva 3 llamadas y muera en la 4: mem_limit: 89m y memswap_limit: 89m
+
+Suma de límites: 264 MiB de 11359 MiB en Linux -> OK, el OOM será solo del contenedor
+
+TABLA 4 - DESCRIPTORES DE ARCHIVO (order-api, prueba /slow)
+------------------------------------------------------------------------
+FDs base: 5 | límite nofile: 256 | cada petición /slow abre 2 (1 socket desde nginx + 1 socket a Redis)
+  N=50   FDs=105   uso=41% de 256 -> estable; nginx usa 100 sockets, Redis 50 clientes
+  N=100  FDs=205   uso=80% de 256 -> estable; nginx usa 200 sockets, Redis 100 clientes
+  N=150  FDs=305   > 256 -> 'Too many open files' (EMFILE); solo 125 se atienden a la vez, Redis 125 clientes
+Máximo de peticiones /slow simultáneas: 125
+
