@@ -1,0 +1,23 @@
+usage_usec 1564994
+user_usec 1288276
+system_usec 276718
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 395
+nr_throttled 53
+throttled_usec 3962077
+nr_bursts 0
+burst_usec 0
+cpu_s=1.851 wall_s=7.402 ratio_wall/cpu=4.00
+cpu_s=4.523 wall_s=35.800 ratio_wall/cpu=7.91
+cpu_s=4.488 wall_s=36.080 ratio_wall/cpu=8.04
+usage_usec 12470104
+user_usec 12026543
+system_usec 443560
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 860
+nr_throttled 488
+throttled_usec 37786697
+nr_bursts 0
+burst_usec 0
