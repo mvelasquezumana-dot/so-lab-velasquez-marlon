@@ -1,0 +1,20 @@
+=== N=50 ===
+FDs: 104
+8080: 50
+6379: 50
+connected_clients:51
+=== N=100 ===
+FDs: 204
+8080: 100
+6379: 100
+connected_clients:101
+=== N=150 ===
+FDs: 256
+8080: 150
+6379: 126
+connected_clients:127
+order-api-1  | [KERNEL] accept() falló: [Errno 24] No file descriptors available
+order-api-1  | [KERNEL] accept() falló: [Errno 24] No file descriptors available
+order-api-1  | [KERNEL] accept() falló: [Errno 24] No file descriptors available
+order-api-1  | [KERNEL] accept() falló: [Errno 24] No file descriptors available
+order-api-1  | [KERNEL] accept() falló: [Errno 24] No file descriptors available
